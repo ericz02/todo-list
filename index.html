@@ -10,6 +10,7 @@
 
         <div id="todo-list"></div>
         <script>
+            //Model
             let todos = [ {
                title: 'get groceries',
                dueDate: '2022-10-04',
@@ -25,15 +26,8 @@
                 id: 'id3'
             }];
 
-            render();
-            
-            function addTodo() {
-                const textbox = document.getElementById('todo-title');
-                const title = textbox.value;
-
-                const datePicker = document.getElementById('date-picker');
-                const dueDate = datePicker.value;
-
+            //Creates a todo
+            function createTodo(title, dueDate) {
                 const id = '' + new Date().getTime();
 
                 todos.push({
@@ -41,14 +35,10 @@
                     dueDate: dueDate,
                     id: id
                 });
-
-                render();
             }
-            
-            function deleteTodo() {
-                const deleteButton = event.target;
-                const idToDelete = deleteButton.id;
 
+            //Deletes a todo
+            function removeTodo(idToDelete) {
                 todos = todos.filter(function(todo){
                     if (todo.id === idToDelete){
                         return false;
@@ -56,12 +46,30 @@
                     else {
                         return true;
                     }
-                
                 });
+            }
+
+            //Controller 
+            function addTodo() {
+                const textbox = document.getElementById('todo-title');
+                const title = textbox.value;
+
+                const datePicker = document.getElementById('date-picker');
+                const dueDate = datePicker.value;
+
+                createTodo(title, dueDate);
 
                 render();
             }
             
+            function deleteTodo() {
+                const deleteButton = event.target;
+                const idToDelete = deleteButton.id;
+                removeTodo(idToDelete)
+                render();
+            }
+            
+            // View
             function render() {
                 //resets list
                 document.getElementById('todo-list').innerHTML = '';
@@ -84,7 +92,7 @@
                 
             }
 
-        
+            render();
 
         </script>
     </body>
